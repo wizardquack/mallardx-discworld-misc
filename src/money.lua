@@ -11,6 +11,12 @@
 -- (see src-tauri/src/plugins/lua_api/mud.rs `register_dynamic_replace`).
 -- This unblocks the "deferred" entry in README's `money.tin` row.
 --
+-- Every pattern wraps the currency token in a top-level capture group and
+-- passes `capture = 1`. `mud.replace`'s default target is `WholeLine` —
+-- without an explicit capture target, the engine would replace the entire
+-- line with the template output, dropping any text on either side of the
+-- price. `capture = 1` confines the rewrite to just the captured span.
+--
 -- Upstream's `@option{money}` toggle isn't ported — Mallard's per-plugin
 -- enable/disable handles that. The `@money_with_AM` helper (used by
 -- upstream to post-process arbitrary text rather than match lines) has
@@ -54,21 +60,21 @@ mud.style([[\b(\d{1,2}p)\b]],          { capture = 1, fg = FG })
 -- digit groups within the multi-denomination tokens.
 -- ───────────────────────────────────────────────────────────────
 
-mud.replace([[\b(\d+)Gc\b]], function(m)
-  return annotate(m[1] * 3)
-end, { fg = FG })
+mud.replace([[\b((\d+)Gc)\b]], function(m)
+  return annotate(m[2] * 3)
+end, { capture = 1, fg = FG })
 
-mud.replace([[\b(\d+),(\d+)Gl\b]], function(m)
-  return annotate(m[1] * 300 + m[2] * 3)
-end, { fg = FG })
+mud.replace([[\b((\d+),(\d+)Gl)\b]], function(m)
+  return annotate(m[2] * 300 + m[3] * 3)
+end, { capture = 1, fg = FG })
 
-mud.replace([[\b(\d+),(\d+),(\d+)Gf\b]], function(m)
-  return annotate(m[1] * 3000 + m[2] * 300 + m[3] * 3)
-end, { fg = FG })
+mud.replace([[\b((\d+),(\d+),(\d+)Gf)\b]], function(m)
+  return annotate(m[2] * 3000 + m[3] * 300 + m[4] * 3)
+end, { capture = 1, fg = FG })
 
-mud.replace([[\b(\d+),(\d+),(\d+),(\d+)Gd\b]], function(m)
-  return annotate(m[1] * 30000 + m[2] * 3000 + m[3] * 300 + m[4] * 3)
-end, { fg = FG })
+mud.replace([[\b((\d+),(\d+),(\d+),(\d+)Gd)\b]], function(m)
+  return annotate(m[2] * 30000 + m[3] * 3000 + m[4] * 300 + m[5] * 3)
+end, { capture = 1, fg = FG })
 
 -- ───────────────────────────────────────────────────────────────
 -- Lancre: pre-decimal hierarchy with optional farthings + ha'pennies.
@@ -110,25 +116,25 @@ end
 
 local function lancre_annot(prefix)
   return function(m)
-    local frac, residual = strip_lancre_fraction(m:raw(1))
+    local frac, residual = strip_lancre_fraction(m:raw(2))
     return annotate(frac + parse_lancre_integer(prefix, residual))
   end
 end
 
-mud.replace([[\bLp (\d+ \d/[24]|\d/[24]|\d+)\b]],
-  lancre_annot("Lp"), { fg = FG })
+mud.replace([[\b(Lp (\d+ \d/[24]|\d/[24]|\d+))\b]],
+  lancre_annot("Lp"), { capture = 1, fg = FG })
 
-mud.replace([[\bLs (\d+\|(?:-|\d+)(?:(?: \d)?/[24])?)\b]],
-  lancre_annot("Ls"), { fg = FG })
+mud.replace([[\b(Ls (\d+\|(?:-|\d+)(?:(?: \d)?/[24])?))\b]],
+  lancre_annot("Ls"), { capture = 1, fg = FG })
 
-mud.replace([[\bLC (\d+\|(?:-|\d+)\|(?:-|\d+)(?:(?: \d)?/[24])?)\b]],
-  lancre_annot("LC"), { fg = FG })
+mud.replace([[\b(LC (\d+\|(?:-|\d+)\|(?:-|\d+)(?:(?: \d)?/[24])?))\b]],
+  lancre_annot("LC"), { capture = 1, fg = FG })
 
-mud.replace([[\bLSov (\d+\|(?:-|\d+)\|(?:-|\d+)\|(?:-|\d+)(?:(?: \d)?/[24])?)\b]],
-  lancre_annot("LSov"), { fg = FG })
+mud.replace([[\b(LSov (\d+\|(?:-|\d+)\|(?:-|\d+)\|(?:-|\d+)(?:(?: \d)?/[24])?))\b]],
+  lancre_annot("LSov"), { capture = 1, fg = FG })
 
-mud.replace([[\bLH (\d+\|(?:-|\d+)\|(?:-|\d+)\|(?:-|\d+)\|(?:-|\d+)(?:(?: \d)?/[24])?)\b]],
-  lancre_annot("LH"), { fg = FG })
+mud.replace([[\b(LH (\d+\|(?:-|\d+)\|(?:-|\d+)\|(?:-|\d+)\|(?:-|\d+)(?:(?: \d)?/[24])?))\b]],
+  lancre_annot("LH"), { capture = 1, fg = FG })
 
 -- ───────────────────────────────────────────────────────────────
 -- Ephebe: optional minas (NM), optional silvers (SN|), then denarii
@@ -145,7 +151,7 @@ mud.replace([[\b((?:\d+M )?(?:S\d{1,2}\|)?\d{1,2}de)\b]], function(m)
   local denarii = s:match("(%d+)de$")
   if denarii then beads = beads + tonumber(denarii) * 2 end
   return annotate(beads)
-end, { fg = FG })
+end, { capture = 1, fg = FG })
 
 -- ───────────────────────────────────────────────────────────────
 -- Agatean (Bes Pelargic): "NRh" or "NRh Ns". Upstream deliberately
@@ -160,7 +166,7 @@ mud.replace([[\b(\d+Rh \d{1,3}s|\d+Rh)\b]], function(m)
   local sm = s:match(" (%d+)s$")
   if sm then beads = beads + tonumber(sm) * 4 end
   return annotate(beads)
-end, { fg = FG })
+end, { capture = 1, fg = FG })
 
 -- ───────────────────────────────────────────────────────────────
 -- Djelian: "DjToon X.YZ" — 1 DjToon = 200 beads. Upstream does
@@ -168,16 +174,16 @@ end, { fg = FG })
 -- decimal multiplication on the captured number.
 -- ───────────────────────────────────────────────────────────────
 
-mud.replace([[\bDjToon (\d+\.\d\d)\b]], function(m)
-  return annotate(tonumber(m:raw(1)) * 200)
-end, { fg = FG })
+mud.replace([[\b(DjToon (\d+\.\d\d))\b]], function(m)
+  return annotate(tonumber(m:raw(2)) * 200)
+end, { capture = 1, fg = FG })
 
 -- ───────────────────────────────────────────────────────────────
 -- Klatch: "N dr" or "N,DD dr" (comma as decimal separator). 1 dinar
 -- = 500 beads.
 -- ───────────────────────────────────────────────────────────────
 
-mud.replace([[\b(\d+(?:,\d\d)?) dr\b]], function(m)
-  local raw = m:raw(1):gsub(",", ".")
+mud.replace([[\b((\d+(?:,\d\d)?) dr)\b]], function(m)
+  local raw = m:raw(2):gsub(",", ".")
   return annotate(tonumber(raw) * 500)
-end, { fg = FG })
+end, { capture = 1, fg = FG })

@@ -397,12 +397,12 @@ local STALL_RANDOM_FG = "cyan"
 
 mud.replace([[^(A small) (stall is propped up on the north side of the road\.)$]],
   "%1 mending %2", { fg = STALL_GUILD_FG })
-mud.replace([[(the haughty-looking) (stall here which is still lit up and trading, even at night\.)]],
-  "%1 mending %2", { fg = STALL_GUILD_FG })
-mud.replace([[(A large white) (tent stall has been pitched here\.  The dust and debris surrounding it suggests that it hasn't moved for some time\.)]],
-  "%1 doctor %2", { fg = STALL_GUILD_FG })
-mud.replace([[(A large white) (tent has been pitched here, and appears to still be open during the dark hours\.)]],
-  "%1 doctor %2", { fg = STALL_GUILD_FG })
+mud.replace([[((the haughty-looking) (stall here which is still lit up and trading, even at night\.))]],
+  "%2 mending %3", { capture = 1, fg = STALL_GUILD_FG })
+mud.replace([[((A large white) (tent stall has been pitched here\.  The dust and debris surrounding it suggests that it hasn't moved for some time\.))]],
+  "%2 doctor %3", { capture = 1, fg = STALL_GUILD_FG })
+mud.replace([[((A large white) (tent has been pitched here, and appears to still be open during the dark hours\.))]],
+  "%2 doctor %3", { capture = 1, fg = STALL_GUILD_FG })
 mud.replace([[^(One of these) (stalls, a jolly-looking blue one, has been pitched here\.)$]],
   "%1 foreign curiosities %2", { fg = STALL_RANDOM_FG })
 mud.replace([[^(One such) (stall is pitched here, a blue tent that is dimly lit and appears to still be trading, even at this hour\.)$]],
@@ -432,8 +432,8 @@ local STALL_RANDOM = {
   { label = "engraver's",    desc = [[^A dark and musty stall appears to be trying to hide away from the noise\.$]] },
   { label = "pet",           desc = [[^A light green tent fills this space\.  Chirps and other chatters emit from it randomly\.$]] },
   { label = "charm",         desc = [[^A pristine white stall sprouts out of the ground here\.  Tourists wander in and out of it frequently\.$]] },
-  { label = "music",         desc = [[^An earthy green tent sprouts out of the ground here\.  Strange noises come from inside of it - they almost sound like music\.]] },
-  { label = "model",         desc = [[^A rickety stall has been set up here, evidently without any real care\.]] },
+  { label = "music",         desc = [[^An earthy green tent sprouts out of the ground here\.  Strange noises come from inside of it - they almost sound like music\.$]] },
+  { label = "model",         desc = [[^A rickety stall has been set up here, evidently without any real care\.$]] },
   { label = "clothing",      desc = [[^A dull tan coloured tent has been constructed here\.$]] },
 }
 for _, stall in ipairs(STALL_RANDOM) do

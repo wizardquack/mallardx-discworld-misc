@@ -48,24 +48,24 @@ mud.gag([[^You continue sneaking\.$]])
 -- ───────────────────────────────────────────────────────────────
 
 mud.gag    ([[^A small blue light is zipping about\.$]])
-mud.replace([[^A small blue light is zipping about(?:,| and) ]],  "")
-mud.replace([[(?: and|,) a small blue light is zipping about]],   "")
+mud.replace([[^(A small blue light is zipping about(?:,| and) )]], "", { capture = 1 })
+mud.replace([[((?: and|,) a small blue light is zipping about)]],  "", { capture = 1 })
 
 -- ───────────────────────────────────────────────────────────────
 -- UPDD — undirected pest-distraction display (tiny moth).
 -- ───────────────────────────────────────────────────────────────
 
 mud.gag    ([[^A tiny .+ moth is flittering about\.$]])
-mud.replace([[^A tiny .+ moth is flittering about(?:,| and) ]],   "")
-mud.replace([[(?: and|,) a tiny .+ moth is flittering about]],    "")
+mud.replace([[^(A tiny .+ moth is flittering about(?:,| and) )]],  "", { capture = 1 })
+mud.replace([[((?: and|,) a tiny .+ moth is flittering about)]],   "", { capture = 1 })
 
 -- ───────────────────────────────────────────────────────────────
 -- Hag's-blessing fireflies.
 -- ───────────────────────────────────────────────────────────────
 
 mud.gag    ([[^A swarm of fireflies is buzzing around\.$]])
-mud.replace([[^A swarm of fireflies is buzzing around(?:,| and) ]], "")
-mud.replace([[(?: and|,) a swarm of fireflies is buzzing around]],  "")
+mud.replace([[^(A swarm of fireflies is buzzing around(?:,| and) )]], "", { capture = 1 })
+mud.replace([[((?: and|,) a swarm of fireflies is buzzing around)]],  "", { capture = 1 })
 
 -- ───────────────────────────────────────────────────────────────
 -- "rtfm list all" discussion-items reminder — global notice, gagged.
