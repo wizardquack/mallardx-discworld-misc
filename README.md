@@ -43,12 +43,6 @@ A grab-bag plugin porting small slices of tt_dw's `scripts/misc/`:
 | `chat.tin`        | Already covered by `discworld-chat`. |
 | `combat.tin`, `high.tin`, `notes.tin`, `sts.tin`, `actions.tin`, `targets.tin`, `keymap.tin`, `help.tin`, `horse.tin`, `autocols.tin`, `switch_user.tin`, `config.tin` | Out of scope for a small "misc" port (size, character-specificity, or already covered elsewhere). |
 
-## Dev rebuild
-
-```sh
-bash scripts/reinstall.sh
-```
-
 ## Changelog
 
 ### v0.3.0
