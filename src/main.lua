@@ -17,6 +17,8 @@
 --                       moonlit market, rare items, DJB stalls, …).
 --                       Magic / portal / octograving rules live in
 --                       discworld-magic/src/high.lua instead.
+--   src/achievements.lua — clickable character name + achievement name
+--                       on `[X has gained the … achievement Y]` lines.
 --
 -- All declarative — each `require` registers its host-API calls as
 -- side effects, so this file just chains them.
@@ -28,3 +30,4 @@ require("djinn")
 require("gags")
 require("money")
 require("high")
+require("achievements")
