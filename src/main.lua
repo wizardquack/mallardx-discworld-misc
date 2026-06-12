@@ -19,6 +19,8 @@
 --                       discworld-magic/src/high.lua instead.
 --   src/achievements.lua — clickable character name + achievement name
 --                       on `[X has gained the … achievement Y]` lines.
+--   src/group_invites.lua — clickable `group join <name>` on group
+--                       invitation lines.
 --
 -- All declarative — each `require` registers its host-API calls as
 -- side effects, so this file just chains them.
@@ -31,3 +33,4 @@ require("gags")
 require("money")
 require("high")
 require("achievements")
+require("group_invites")
