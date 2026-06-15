@@ -6,10 +6,7 @@
 -- in colour codes plus a computed annotation; Mallard's function-form
 -- `mud.replace(pattern, function(m) return "%0 (...)" end, { fg = ... })`
 -- is a direct fit — `%0` preserves the original styled span, and the
--- literal " (A$...)" annotation picks up `opts.fg`. The dynamic-template
--- path explicitly cites currency conversion as its canonical use case
--- (see src-tauri/src/plugins/lua_api/mud.rs `register_dynamic_replace`).
--- This unblocks the "deferred" entry in README's `money.tin` row.
+-- literal " (A$...)" annotation picks up `opts.fg`.
 --
 -- Every pattern wraps the currency token in a top-level capture group and
 -- passes `capture = 1`. `mud.replace`'s default target is `WholeLine` —
