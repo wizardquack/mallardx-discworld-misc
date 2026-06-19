@@ -1,6 +1,6 @@
 id = "net.mallard.discworld-misc"
 name = "Discworld Misc"
-version = "0.4.0"
+version = "0.5.0"
 description = "An opinionated plugin porting some bits of tt_dw's highlighting regex"
 language = "lua"
 entry = "src/main.lua"
