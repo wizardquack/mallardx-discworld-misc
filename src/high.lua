@@ -367,10 +367,32 @@ local RARE_ITEMS = {
 -- magenta` first, then `bold white` later); the second declaration
 -- wins in tintin too, so we register only the final colour and skip
 -- the dead first entry.
-mud.style([[(white smock)]], { capture = 1, fg = "white", bold = true })
-for _, item in ipairs(RARE_ITEMS) do
-  item[2].capture = 1
-  mud.style("(" .. item[1] .. ")", item[2])
+-- Consolidate the rare-item highlights by colour: one alternation rule per
+-- distinct style instead of ~80 single-item rules. Items sharing a style
+-- collapse into `(itemA|itemB|…)` with `capture = 1`, so the matched name is
+-- captured and coloured exactly as before — same items, same colours, just
+-- fewer members in the engine's combined RegexSet prefilter.
+local function style_key(s)
+  return tostring(s.fg) .. "|" .. tostring(s.bg) .. "|" .. tostring(s.bold)
+end
+local groups, order = {}, {}
+local function add(name, style)
+  local k = style_key(style)
+  if not groups[k] then
+    groups[k] = { style = style, names = {} }
+    order[#order + 1] = k
+  end
+  local g = groups[k]
+  g.names[#g.names + 1] = name
+end
+-- `white smock` first so it keeps its position ahead of the table entries
+-- (upstream's last-wins colour; see note above).
+add("white smock", { fg = "white", bold = true })
+for _, item in ipairs(RARE_ITEMS) do add(item[1], item[2]) end
+for _, k in ipairs(order) do
+  local g = groups[k]
+  g.style.capture = 1
+  mud.style("(" .. table.concat(g.names, "|") .. ")", g.style)
 end
 
 -- ───────────────────────────────────────────────────────────────
