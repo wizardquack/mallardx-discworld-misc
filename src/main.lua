@@ -27,6 +27,9 @@
 --   src/stop.lua      — clickable suggested command on the
 --                       quit-while-fighting refusal (`You cannot quit
 --                       while in combat.  Use "stop" …`) line.
+--   src/learn.lua     — clickable suggested command on command-teaching
+--                       (`Type "learn … from …" to learn the command.`)
+--                       lines.
 --
 -- All declarative — each `require` registers its host-API calls as
 -- side effects, so this file just chains them.
@@ -42,3 +45,4 @@ require("achievements")
 require("offers")
 require("follow")
 require("stop")
+require("learn")
