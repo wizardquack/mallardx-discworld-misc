@@ -24,6 +24,9 @@
 --   src/follow.lua    — clickable suggested command on follow-request
 --                       (`… is requesting to be able to follow you.
 --                       Use '…'`) lines.
+--   src/stop.lua      — clickable suggested command on the
+--                       quit-while-fighting refusal (`You cannot quit
+--                       while in combat.  Use "stop" …`) line.
 --
 -- All declarative — each `require` registers its host-API calls as
 -- side effects, so this file just chains them.
@@ -38,3 +41,4 @@ require("high")
 require("achievements")
 require("offers")
 require("follow")
+require("stop")
