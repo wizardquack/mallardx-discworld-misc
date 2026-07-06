@@ -21,6 +21,9 @@
 --                       on `[X has gained the … achievement Y]` lines.
 --   src/offers.lua    — clickable suggested command on item-offer
 --                       (`… offers you … for inspection. Use "…"`) lines.
+--   src/follow.lua    — clickable suggested command on follow-request
+--                       (`… is requesting to be able to follow you.
+--                       Use '…'`) lines.
 --
 -- All declarative — each `require` registers its host-API calls as
 -- side effects, so this file just chains them.
@@ -34,3 +37,4 @@ require("money")
 require("high")
 require("achievements")
 require("offers")
+require("follow")
