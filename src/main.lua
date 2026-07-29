@@ -30,6 +30,9 @@
 --   src/learn.lua     — clickable suggested command on command-teaching
 --                       (`Type "learn … from …" to learn the command.`)
 --                       lines.
+--   src/syntax.lua    — clickable suggested command on command-syntax
+--                       hints (`See "syntax <command>" for the input
+--                       patterns.`) lines.
 --
 -- All declarative — each `require` registers its host-API calls as
 -- side effects, so this file just chains them.
@@ -46,3 +49,4 @@ require("offers")
 require("follow")
 require("stop")
 require("learn")
+require("syntax")
