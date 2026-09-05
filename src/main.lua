@@ -24,6 +24,9 @@
 --   src/follow.lua    — clickable suggested command on follow-request
 --                       (`… is requesting to be able to follow you.
 --                       Use '…'`) lines.
+--   src/give.lua      — clickable suggested command on give-offer
+--                       (`Use the command "give accept from …" to
+--                       accept the offer.`) lines.
 --   src/stop.lua      — clickable suggested command on the
 --                       quit-while-fighting refusal (`You cannot quit
 --                       while in combat.  Use "stop" …`) line.
@@ -47,6 +50,7 @@ require("high")
 require("achievements")
 require("offers")
 require("follow")
+require("give")
 require("stop")
 require("learn")
 require("syntax")
