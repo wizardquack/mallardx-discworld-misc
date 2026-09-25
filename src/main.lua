@@ -18,7 +18,9 @@
 --                       Magic / portal / octograving rules live in
 --                       discworld-magic/src/high.lua instead.
 --   src/achievements.lua — clickable character name + achievement name
---                       on `[X has gained the … achievement Y]` lines.
+--                       on `[X has gained the … achievement Y]` lines,
+--                       plus clickable categories and record-holder
+--                       names in the `achievement details` report.
 --   src/offers.lua    — clickable suggested command on item-offer
 --                       (`… offers you … for inspection. Use "…"`) lines.
 --   src/follow.lua    — clickable suggested command on follow-request
