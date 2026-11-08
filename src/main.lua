@@ -34,7 +34,10 @@
 --                       while in combat.  Use "stop" …`) line.
 --   src/learn.lua     — clickable suggested command on command-teaching
 --                       (`Type "learn … from …" to learn the command.`)
---                       lines.
+--                       and skill-teaching (`Use "learn" to learn the
+--                       skill.`) lines. Teacher display names are reduced
+--                       to character names by src/learner.lua and
+--                       src/titles.lua, copied from discworld-teaching.
 --   src/syntax.lua    — clickable suggested command on command-syntax
 --                       hints (`See "syntax <command>" for the input
 --                       patterns.`) lines.
